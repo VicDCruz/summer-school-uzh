@@ -44,6 +44,8 @@ public class AccountBuilder {
                 .setInitialBalance(new Hbar(5))
                 .execute(client);
 
+        printAccount(account, client);
+        verifyAccount(account.getReceipt(client).accountId, client);
         return new TokenCredentialAccount(privateKey, account.getReceipt(client).accountId);
     }
 }

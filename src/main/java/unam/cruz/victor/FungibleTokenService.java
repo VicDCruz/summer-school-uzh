@@ -19,7 +19,7 @@ public class FungibleTokenService {
                 .setSupplyType(TokenSupplyType.INFINITE)
                 .setSupplyKey(supplier.getKey())
                 .freezeWith(client);
-        return submitTokenCreation(tokenCreateTx, supplier.getKey());
+        return submitTokenCreation(tokenCreateTx, treasury.getKey());
     }
 
     private static TokenId submitTokenCreation(TokenCreateTransaction tokenCreateTransaction, PrivateKey signingKey) throws PrecheckStatusException, TimeoutException, ReceiptStatusException {
