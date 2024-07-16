@@ -18,27 +18,11 @@ public class HederaExamples {
 //        QueryService.getQueryCost(newAccountId);
 //        QueryService.getAccountBalance(newAccountId);
 
-        // ========================================================
         TokenCredentialAccount treasuryTokenAccount = AccountBuilder.createTokenAccount();
         TokenCredentialAccount supplyTokenAccount = AccountBuilder.createTokenAccount();
-        FungibleTokenService.createToken(treasuryTokenAccount, supplyTokenAccount);
+        TokenId newTokenId = FungibleTokenService.createToken(treasuryTokenAccount, supplyTokenAccount);
 
-        // TOKEN ASSOCIATION WITH ALICE's ACCOUNT
-        TokenAssociateTransaction associateAliceTx = new TokenAssociateTransaction()
-                .setAccountId(Objects.requireNonNull(aliceAccountId))
-                .setTokenIds(Collections.singletonList(tokenId))
-                .freezeWith(client)
-                .sign(aliceKey);
-
-        //Submit the transaction
-        TransactionResponse associateAliceTxSubmit = associateAliceTx.execute(client);
-
-        printTransactionReceipt(associateAliceTxSubmit, client);
-    }
-
-    private static void printTransactionReceipt(TransactionResponse associateAliceTxSubmit, Client client) throws TimeoutException, PrecheckStatusException, ReceiptStatusException {
-        //Get the receipt of the transaction
-        TransactionReceipt associateAliceRx = associateAliceTxSubmit.getReceipt(client);
-        System.out.println(associateAliceRx);
+        TokenCredentialAccount aliceTokenAccount = AccountBuilder.createTokenAccount();
+        FungibleTokenService.associateToken(aliceTokenAccount, newTokenId);
     }
 }
