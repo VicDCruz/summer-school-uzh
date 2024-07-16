@@ -7,7 +7,7 @@ import com.hedera.hashgraph.sdk.PrivateKey;
 import io.github.cdimascio.dotenv.Dotenv;
 
 public class ClientSingleton {
-    private Client client;
+    private final Client client;
 
     public Client getClient() {
         return client;

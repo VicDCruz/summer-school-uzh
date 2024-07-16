@@ -15,7 +15,7 @@ public class PinataExample {
         JSONObject jsonObj = new JSONObject();
 
         jsonObj.put("name", "John Doe");
-        jsonObj.put("age", 40);
+        jsonObj.put("age", 50);
         jsonObj.put("has_pets", true);
         return jsonObj;
     }

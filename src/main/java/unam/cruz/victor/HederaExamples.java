@@ -3,8 +3,6 @@ package unam.cruz.victor;
 import com.hedera.hashgraph.sdk.*;
 import io.github.cdimascio.dotenv.Dotenv;
 
-import java.util.Collections;
-import java.util.Objects;
 import java.util.concurrent.TimeoutException;
 
 public class HederaExamples {
@@ -23,15 +21,32 @@ public class HederaExamples {
          
 
         // step 1 : create list of people - donors and receivers
-        AccountId newAccountId = AccountBuilder.createAccount();
+//        AccountId newAccountId = AccountBuilder.createAccount();
+
+//        transferAndQueryAccount(myAccountId, newAccountId);
+
+//        createAndAssociateFungibleTokenAccounts();
+
+        TokenCredentialAccount treasuryTokenAccount = AccountBuilder.createTokenAccount();
+        TokenCredentialAccount supplyTokenAccount = AccountBuilder.createTokenAccount();
+        TokenId newTokenId = NonFungibleTokenService.createToken(treasuryTokenAccount, supplyTokenAccount);
+        TokenCredentialAccount aliceTokenAccount = AccountBuilder.createTokenAccount();
+        NonFungibleTokenService.mintToken(newTokenId, "QmTzCmi63hPmj3heFhKXgZRGGwm8P3kygDN5KeMgyvzhoe", aliceTokenAccount, supplyTokenAccount);
 
         // step 2 : NFTs logic
         
 
-//        TransferService.transferHbar(myAccountId, newAccountId, 1000);
-//        QueryService.getQueryCost(newAccountId);
-//        QueryService.getAccountBalance(newAccountId);
+//        TokenCredentialAccount aliceTokenAccount = AccountBuilder.createTokenAccount();
+//        FungibleTokenService.associateToken(aliceTokenAccount, newTokenId);
+    }
 
+    private static void transferAndQueryAccount(AccountId myAccountId, AccountId newAccountId) throws PrecheckStatusException, TimeoutException, ReceiptStatusException {
+        TransferService.transferHbar(myAccountId, newAccountId, 1000);
+        QueryService.getQueryCost(newAccountId);
+        QueryService.getAccountBalance(newAccountId);
+    }
+
+    private static void createAndAssociateFungibleTokenAccounts() throws PrecheckStatusException, TimeoutException, ReceiptStatusException {
         TokenCredentialAccount treasuryTokenAccount = AccountBuilder.createTokenAccount();
         TokenCredentialAccount supplyTokenAccount = AccountBuilder.createTokenAccount();
         TokenId newTokenId = FungibleTokenService.createToken(treasuryTokenAccount, supplyTokenAccount);

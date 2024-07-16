@@ -2,6 +2,7 @@ package unam.cruz.victor.NFTs;
 
 import com.hedera.hashgraph.sdk.*;
 import io.github.cdimascio.dotenv.Dotenv;
+import unam.cruz.victor.ClientSingleton;
 
 import java.util.*;
 import java.util.concurrent.TimeoutException;
@@ -9,21 +10,10 @@ import java.util.concurrent.TimeoutException;
 public class OrganNFT {
 
     private final Client client;
-    private final PrivateKey myPrivateKey;
-    private final AccountId myAccountId;
     private final int MAX_TRANSACTION_FEE = 20; // Max transaction fee in Hbars
 
     public OrganNFT() {
-        // Load environment variables
-        Dotenv dotenv = Dotenv.load();
-
-        // Grab Hedera testnet account ID and private key
-        myAccountId = AccountId.fromString(dotenv.get("MY_ACCOUNT_ID"));
-        myPrivateKey = PrivateKey.fromStringDER(dotenv.get("MY_PRIVATE_KEY"));
-
-        // Create Hedera testnet client
-        client = Client.forTestnet();
-        client.setOperator(myAccountId, myPrivateKey);
+        this.client = ClientSingleton.getInstance().getClient();
     }
 
     public AccountId createAccount(PrivateKey key, long initialBalance) throws TimeoutException, PrecheckStatusException, ReceiptStatusException {
