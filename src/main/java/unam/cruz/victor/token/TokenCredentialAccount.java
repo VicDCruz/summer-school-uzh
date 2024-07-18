@@ -1,4 +1,4 @@
-package unam.cruz.victor;
+package unam.cruz.victor.token;
 
 import com.hedera.hashgraph.sdk.AccountId;
 import com.hedera.hashgraph.sdk.PrivateKey;

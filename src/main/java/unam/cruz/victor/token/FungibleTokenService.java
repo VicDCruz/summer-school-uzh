@@ -1,6 +1,7 @@
-package unam.cruz.victor;
+package unam.cruz.victor.token;
 
 import com.hedera.hashgraph.sdk.*;
+import unam.cruz.victor.client.ClientSingleton;
 
 import java.util.Collections;
 import java.util.Objects;

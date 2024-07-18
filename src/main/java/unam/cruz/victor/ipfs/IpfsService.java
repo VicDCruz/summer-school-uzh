@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import pinata.Pinata;
 import pinata.PinataException;
 import pinata.PinataResponse;
+import unam.cruz.victor.utils.JsonMapper;
 
 import java.io.IOException;
 
@@ -15,7 +16,9 @@ public class IpfsService {
 
         logPinataResponse(pinataResponse);
         IpfsResponse data = JsonMapper.mapJsonToObject(pinataResponse.getBody(), IpfsResponse.class);
-        return data.getIpfsHash();
+        String ipfsHash = data.getIpfsHash();
+        System.out.println("https://gateway.pinata.cloud/ipfs/" + ipfsHash + "/");
+        return ipfsHash;
     }
 
     private static void logPinataResponse(PinataResponse pinataResponse) {

@@ -1,8 +1,7 @@
 package unam.cruz.victor.NFTs;
 
 import com.hedera.hashgraph.sdk.*;
-import io.github.cdimascio.dotenv.Dotenv;
-import unam.cruz.victor.ClientSingleton;
+import unam.cruz.victor.client.ClientSingleton;
 
 import java.util.*;
 import java.util.concurrent.TimeoutException;
@@ -77,7 +76,7 @@ public class OrganNFT {
         TransactionResponse associateTxSubmit = associateTx.execute(client);
         TransactionReceipt associateRx = associateTxSubmit.getReceipt(client);
 
-        System.out.println("\nNFT association with account " + accountId + ": " + associateRx.status + " ✅");
+        System.out.println("\nNFT association with account " + accountId + ": " + associateRx.status);
     }
 
     public void transferNFT(NftId nftId, AccountId fromAccountId, AccountId toAccountId, PrivateKey fromKey)

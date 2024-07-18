@@ -1,7 +1,10 @@
 package unam.cruz.victor;
 
 import com.hedera.hashgraph.sdk.*;
-import io.github.cdimascio.dotenv.Dotenv;
+import unam.cruz.victor.account.AccountBuilder;
+import unam.cruz.victor.token.FungibleTokenService;
+import unam.cruz.victor.token.NonFungibleTokenService;
+import unam.cruz.victor.token.TokenCredentialAccount;
 
 import java.util.concurrent.TimeoutException;
 
@@ -21,10 +24,8 @@ public class HederaExamples {
          
 
         // step 1 : create list of people - donors and receivers
-//        AccountId newAccountId = AccountBuilder.createAccount();
-
+//        AccountId newAccountId = AccountBuilder.createAccountId();
 //        transferAndQueryAccount(myAccountId, newAccountId);
-
 //        createAndAssociateFungibleTokenAccounts();
 
         TokenCredentialAccount treasuryTokenAccount = AccountBuilder.createTokenAccount();

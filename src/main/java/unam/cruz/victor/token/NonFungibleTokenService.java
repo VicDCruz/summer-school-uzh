@@ -1,6 +1,7 @@
-package unam.cruz.victor;
+package unam.cruz.victor.token;
 
 import com.hedera.hashgraph.sdk.*;
+import unam.cruz.victor.client.ClientSingleton;
 
 import java.util.Collections;
 import java.util.Objects;
@@ -13,8 +14,8 @@ public class NonFungibleTokenService {
     public static TokenId createToken(TokenCredentialAccount treasury, TokenCredentialAccount supplier) throws ReceiptStatusException, PrecheckStatusException, TimeoutException {
         Client client = ClientSingleton.getInstance().getClient();
         TokenCreateTransaction nftCreate = new TokenCreateTransaction()
-                .setTokenName("diploma")
-                .setTokenSymbol("GRAD")
+                .setTokenName("OrganDonation")
+                .setTokenSymbol("OrgID")
                 .setTokenType(TokenType.NON_FUNGIBLE_UNIQUE)
                 .setDecimals(0)
                 .setInitialSupply(0)
@@ -27,6 +28,7 @@ public class NonFungibleTokenService {
     }
 
     private static TokenId submitTokenCreation(TokenCreateTransaction tokenCreateTransaction, PrivateKey signingKey) throws PrecheckStatusException, TimeoutException, ReceiptStatusException {
+        System.out.println("Submitting token...");
         Client client = ClientSingleton.getInstance().getClient();
         TokenCreateTransaction tokenCreateSign = tokenCreateTransaction.sign(signingKey);
 
@@ -60,15 +62,13 @@ public class NonFungibleTokenService {
         System.out.println("Token association with Alice's account: " + associateAliceRx.status);
     }
 
-    // QmTzCmi63hPmj3heFhKXgZRGGwm8P3kygDN5KeMgyvzhoe
     public static void mintToken(TokenId nftTokenId, String ipfsCid, TokenCredentialAccount newOwner, TokenCredentialAccount supplier) throws PrecheckStatusException, TimeoutException, ReceiptStatusException {
         Client client = ClientSingleton.getInstance().getClient();
-        String cid = "ipfs://" + ipfsCid + "/metadata.json";
 
         TokenMintTransaction mintTx = new TokenMintTransaction()
                 .setTokenId(nftTokenId)
                 .setMaxTransactionFee(new Hbar(MAX_TRANSACTION_FEE));
-        mintTx.addMetadata(cid.getBytes());
+        mintTx.addMetadata(("ipfs://" + ipfsCid + "/metadata.json").getBytes());
         mintTx.freezeWith(client);
 
         mintAndAssociateNFT(nftTokenId, mintTx, newOwner, supplier);
@@ -92,6 +92,6 @@ public class NonFungibleTokenService {
         TransactionResponse associateAliceTxSubmit = associateAliceTx.execute(client);
         TransactionReceipt associateAliceRx = associateAliceTxSubmit.getReceipt(client);
 
-        System.out.println("\nNFT association with Alice's account: " + associateAliceRx.status + " ✅");
+        System.out.println("\nNFT association with account " + newOwner.getAccountId() + ": " + associateAliceRx.status);
     }
 }

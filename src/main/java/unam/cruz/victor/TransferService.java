@@ -1,6 +1,7 @@
 package unam.cruz.victor;
 
 import com.hedera.hashgraph.sdk.*;
+import unam.cruz.victor.client.ClientSingleton;
 
 import java.util.concurrent.TimeoutException;
 

@@ -1,5 +1,6 @@
-package unam.cruz.victor.ipfs;
+package unam.cruz.victor.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonMapper {
@@ -12,5 +13,10 @@ public class JsonMapper {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static String stringify(Object object) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.writeValueAsString(object);
     }
 }
